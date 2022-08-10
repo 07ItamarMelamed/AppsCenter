@@ -22,22 +22,33 @@
     />
   </head>
   <body>
-    <img src="images/AppsCenter.png" class="center py-4" alt="AppsCenter Title" />
-    <div class="input-group center py-5" style="width: 600px">
-        <input
+    <img
+      src="images/AppsCenter.png"
+      class="center py-4"
+      alt="AppsCenter Title"
+    />
+    <div class="input-group center py-5" style="width: 800px">
+      <input
         class="form-control"
         list="appsList"
         id="appsSearch"
+        oninput="setAppsList(event.target.value, true)"
         placeholder="App to search"
-        />
-        <datalist id="appsList">
-        <option value="San Francisco"></option>
-        <option value="New York"></option>
-        <option value="Seattle"></option>
-        <option value="Los Angeles"></option>
-        <option value="Chicago"></option>
-        </datalist>
-        <button type="button" class="btn btn-outline-secondary">Search</button>
+      />
+      <datalist id="appsList"> </datalist>
+      <button type="button" class="btn btn-light">
+        <img style="width: 20px" src="images/magnifyingGlass.png" />
+      </button>
+      <form action="addApplication.html">
+        <button type="submit" class="btn btn-success">+ Publish new App</button>
+      </form>
     </div>
+    <div class="container" style="padding-left: 17rem">
+      <div id="listAllApps"></div>
+    </div>
+    <script src="src/applications.js"></script>
+    <script src="src/AddApp.js"></script>
+    <script src="src/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
   </body>
 </html>
