@@ -1,3 +1,5 @@
+"use strict";
+
 const addItemToTheList = (data) => {
   localStorage.setItem(
     "applications",
@@ -14,86 +16,39 @@ const getNextId = () => {
   return id;
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-    
-});
-
-let check = [false, false, false, false, false];
-
-const checkName = (event) => {
-  let form = document.getElementById('nameInput');
-  if (!form.checkValidity()) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
-  form.classList.add('was-validated');
-};
-
-const checkPrice = (event) => {
-    let form = document.getElementById('nameInput');
-    if (!form.checkValidity()) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  
-    form.classList.add('was-validated');
-  };
-
-const checkDesc = (event) => {
-    let form = document.getElementById('nameInput');
-    if (!form.checkValidity()) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  
-    form.classList.add('was-validated');
-  };
-
-const checkCompany = (event) => {
-    let form = document.getElementById('nameInput');
-    if (!form.checkValidity()) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  
-    form.classList.add('was-validated');
-  };
-
-const checkImage = (event) => {
-    let form = document.getElementById('nameInput');
-    if (!form.checkValidity()) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  
-    form.classList.add('was-validated');
-  };
-
-const checkAllFields = () => {
-  if (check[0] && check[1] && check[2] && check[3] && check[4]) {
+const moveToMainPage = () => {
+  const name = document.getElementById("nameInput");
+  const price = document.getElementById("priceInput");
+  const desc = document.getElementById("descInput");
+  const company = document.getElementById("companyInput");
+  const image = document.getElementById("imageInput");
+  if (
+    name.checkValidity() &&
+    price.checkValidity() &&
+    desc.checkValidity() &&
+    company.checkValidity() &&
+    image.checkValidity()
+  ) {
+    addItemToTheList({
+      id: getNextId(),
+      imageUrl: document.getElementById("imageInput").value,
+      name: document.getElementById("nameInput").value,
+      price: document.getElementById("priceInput").value,
+      desc: document.getElementById("descInput").value,
+      companyName: document.getElementById("companyInput").value
+    });
     location.assign("mainPage.html");
-  } else {
-    alert("Some fields are empty.\nCheck once more.");
   }
 };
 
-(function () {
-    'use strict'
+const setFieldsValidation = () => {
+  let forms = document.querySelectorAll(".needs-validation");
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.querySelectorAll('.needs-validation')
+  Array.prototype.slice.call(forms).forEach((form) => {
+    form.classList.add("was-validated");
+  });
+};
 
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-            if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-            }
-
-            form.classList.add('was-validated')
-        }, false)
-    })
-})()
+document.addEventListener("DOMContentLoaded", () => {
+  setFieldsValidation();
+});

@@ -27,159 +27,104 @@
       class="center py-4"
       alt="AppsCenter Title"
     />
-    <form class="row g-3 needs-validation" novalidate>
-        <div class="col-md-4">
-          <label for="validationCustom01" class="form-label">First name</label>
-          <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
-        <div class="col-md-4">
-          <label for="validationCustom02" class="form-label">Last name</label>
-          <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
-        <div class="col-md-4">
-          <label for="validationCustomUsername" class="form-label">Username</label>
+    <div class="container py-5" style="width: 400px;">
+      <form class="col g-3 needs-validation" novalidate>
+        <div class="row-md-4">
+          <label for="nameInput" class="form-label py-2">App Name:</label>
           <div class="input-group has-validation">
-            <span class="input-group-text" id="inputGroupPrepend">@</span>
-            <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+            <input
+              type="text"
+              class="form-control"
+              id="nameInput"
+              name="name"
+              placeholder="Name"
+              aria-describedby="inputGroupPrepend"
+              maxlength="30"
+              minlength="4"
+              pattern="\w*"
+              required
+            />
             <div class="invalid-feedback">
-              Please choose a username.
+              Must have at least 4 characters from letters and numbers.
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <label for="validationCustom03" class="form-label">City</label>
-          <input type="text" class="form-control" id="validationCustom03" required>
-          <div class="invalid-feedback">
-            Please provide a valid city.
-          </div>
-        </div>
-        <div class="col-md-3">
-          <label for="validationCustom04" class="form-label">State</label>
-          <select class="form-select" id="validationCustom04" required>
-            <option selected disabled value="">Choose...</option>
-            <option>...</option>
-          </select>
-          <div class="invalid-feedback">
-            Please select a valid state.
-          </div>
-        </div>
-        <div class="col-md-3">
-          <label for="validationCustom05" class="form-label">Zip</label>
-          <input type="text" class="form-control" id="validationCustom05" required>
-          <div class="invalid-feedback">
-            Please provide a valid zip.
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-            <label class="form-check-label" for="invalidCheck">
-              Agree to terms and conditions
-            </label>
+        <div class="row-md-4">
+          <label for="priceInput" class="form-label py-2">App Price:</label>
+          <div class="input-group has-validation">
+            <input
+              type="text"
+              min="0"
+              class="form-control"
+              id="priceInput"
+              name="price"
+              placeholder="Price in $"
+              aria-describedby="inputGroupPrepend"
+              pattern="\d*\.*\d+"
+              required
+            />
             <div class="invalid-feedback">
-              You must agree before submitting.
+              Insert a number.
             </div>
           </div>
         </div>
-        <div class="col-12">
-          <button class="btn btn-primary" type="submit">Submit form</button>
+        <div class="row-md-4">
+          <label for="descInput" class="form-label py-2">App Description:</label>
+          <div class="input-group has-validation">
+            <input
+              type="text"
+              class="form-control"
+              id="descInput"
+              name="description"
+              placeholder="Description"
+              aria-describedby="inputGroupPrepend"
+              maxlength="500"
+            />
+          </div>
         </div>
-      </form>
-    <div class="container py-5 text-center">
-      <form class="needs-validation" novalidate>
-        <div>
-      <label for="nameInput" class="form-label">App Name:</label>
-      <div class="input-group has-validation">
-        <input
-            type="text"
-            class="form-control mb-3"
-            id="nameInput"
-            style="margin: auto; width: 300px; display:inline;"
-            placeholder="Name"
-            oninput="checkName(event)"
-            aria-describedby="inputGroupPrepend"
-            required
-        />
-        <div class="invalid-feedback">
-            Looks bad!
+        <div class="row-md-4">
+          <label for="companyInput" class="form-label py-2">Company:</label>
+          <div class="input-group has-validation">
+            <input
+              type="text"
+              class="form-control"
+              id="companyInput"
+              name="companyName"
+              placeholder="Company Name"
+              aria-describedby="inputGroupPrepend"
+              maxlength="30"
+            />
+          </div>
         </div>
-      </div>
+        <div class="row-md-4">
+          <label for="imageInput" class="form-label py-2">Image URL:</label>
+          <div class="input-group has-validation">
+            <input
+              type="file"
+              class="form-control"
+              id="imageInput"
+              name="ImageUrl"
+              placeholder="Image URL"
+              aria-describedby="inputGroupPrepend"
+              maxlength="300"
+            />
+            <div class="valid-feedback">
+              Example: "c/user/image.png"
+            </div>
+          </div>
+        </div>
     </div>
-      <p style="display: block"></p>
-      <p class="optiontitle" style="padding-right: 100px; display:inline;">App Price:</p>
-      <input
-        type="text"
-        class="form-control mb-3"
-        id="priceInput"
-        style="margin: auto; width: 300px; display:inline;"
-        placeholder="Price in $"
-        oninput="checkPrice(event)"
-        required
-      />
-      <div class="invalid-feedback">
-        Looks bad!
-      </div>
-      <p style="display: block"></p>
-      <p class="optiontitle" style="padding-right: 100px; display:inline;">App Description:</p>
-      <input
-        type="text"
-        class="form-control mb-3"
-        id="descInput"
-        style="margin: auto; width: 300px; display:inline;"
-        placeholder="Description"
-        oninput="checkDesc(event)"
-        required
-      />
-      <div class="invalid-feedback">
-        Looks bad!
-      </div>
-      <p style="display: block"></p>
-      <p class="optiontitle" style="padding-right: 100px; display:inline;">Company:</p>
-      <input
-        type="text"
-        class="form-control mb-3"
-        id="companyInput"
-        style="margin: auto; width: 300px; display:inline;"
-        placeholder="Company Name"
-        oninput="checkCompany(event)"
-        required
-      />
-      <div class="invalid-feedback">
-        Looks bad!
-      </div>
-      <p style="display: block"></p>
-      <p class="optiontitle" style="padding-right: 100px; display:inline;">Image URL:</p>
-      <input
-        type="text"
-        class="form-control mb-3"
-        id="imageInput"
-        style="margin: auto; width: 300px; display:inline;"
-        placeholder="Image URL"
-        oninput="checkImage(event)"
-        required
-      />
-      <div class="invalid-feedback">
-        Looks bad!
-      </div>
-      <p style="display: block"></p>
-    </div>
-    <button
+      <button
         type="button"
         class="center btn btn-success btn-lg"
-        style="display: block"
-        onclick="checkAllFields()"
+        style="display: block; width: 220px"
+        onclick="moveToMainPage()"
       >
-        Continue
+        Publish Application
       </button>
-    </form>
-    <script src="src/applications.js"></script>
-    <script src="src/AddApp.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-  </body>
+  </form>
+  <script src="src/applications.js"></script>
+  <script src="src/AddApp.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+ </body>
 </html>

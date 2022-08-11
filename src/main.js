@@ -1,3 +1,5 @@
+'use strict';
+
 const getData = () => {
   if (localStorage.getItem("applications") == null) {
     localStorage.setItem("applications", JSON.stringify(applications));
@@ -19,15 +21,15 @@ const setAppsList = (value, option = false) => {
   document.getElementById("listAllApps").innerHTML = appsData
     .map((app) => {
       image =
-        app.imageUrl === undefined
+        app.imageUrl === ''
           ? `images/Help.png`
           : `images/${app.id}/${app.imageUrl}`;
       desc =
-        app.desc === undefined
+        app.desc === ''
           ? "this app does not have description"
           : app.desc;
       companyName =
-        app.companyName === undefined
+        app.companyName === ''
           ? "this app does not have a company"
           : app.companyName;
       name = app.name;
