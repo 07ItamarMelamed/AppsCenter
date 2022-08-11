@@ -22,6 +22,7 @@ const moveToMainPage = () => {
   const desc = document.getElementById("descInput");
   const company = document.getElementById("companyInput");
   const image = document.getElementById("imageInput");
+  const imageFile = document.getElementById("imageInput")?.files[0]?.name ? document.getElementById("imageInput").files[0].name : '';
   if (
     name.checkValidity() &&
     price.checkValidity() &&
@@ -31,11 +32,11 @@ const moveToMainPage = () => {
   ) {
     addItemToTheList({
       id: getNextId(),
-      imageUrl: document.getElementById("imageInput").value,
-      name: document.getElementById("nameInput").value,
-      price: document.getElementById("priceInput").value,
-      desc: document.getElementById("descInput").value,
-      companyName: document.getElementById("companyInput").value
+      imageUrl: imageFile,
+      name: name.value,
+      price: price.value,
+      desc: desc.value,
+      companyName: company.value
     });
     location.assign("mainPage.html");
   }
