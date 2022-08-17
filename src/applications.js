@@ -3,7 +3,7 @@ let id = 6;
 let applications = [
       {
           'id': "1",
-          'imageUrl': "facebook.png",
+          'imageUrl': "images/1/facebook.png",
           'name': "Facebook",
           'price': "2.99",
           'desc': "To see whats new in your friends life!",
@@ -11,7 +11,7 @@ let applications = [
       },
       {
           'id': "2",
-          'imageUrl': "twitter.png",
+          'imageUrl': "images/2/twitter.png",
           'name': "Twitter",
           'price': "5",
           'desc': "To see whats new in your friends life!",
@@ -19,7 +19,7 @@ let applications = [
       },
       {
           'id': "3",
-          'imageUrl': "instagram.jpg",
+          'imageUrl': "images/3/instagram.jpg",
           'name': "Instagram",
           'price': "2",
           'desc': "To talk with your friends!",
@@ -27,7 +27,7 @@ let applications = [
       },
       {
           'id': "4",
-          'imageUrl': "waze.png",
+          'imageUrl': "images/4/waze.png",
           'name': "waze",
           'price': "6.66",
           'desc': "To go to see your friends!",
@@ -35,7 +35,7 @@ let applications = [
       },
       {
           'id': "5",
-          'imageUrl': "Whatsapp.png",
+          'imageUrl': "images/5/Whatsapp.png",
           'name': "Whatsapp",
           'price': "7",
           'desc': "To talk to your friends!",
@@ -43,7 +43,7 @@ let applications = [
       },
       {
           'id': "6",
-          'imageUrl': "getTaxi.png",
+          'imageUrl': "images/6/getTaxi.png",
           'name': "GetTaxi",
           'price': "5.99",
           'desc': "To take a taxi!",

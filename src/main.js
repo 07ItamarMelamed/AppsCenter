@@ -1,5 +1,10 @@
 'use strict';
 
+const playSound = (videoFile) => {
+  const audio = new Audio(videoFile);
+  audio.play();
+}
+
 const getData = () => {
   if (localStorage.getItem("applications") == null) {
     localStorage.setItem("applications", JSON.stringify(applications));
@@ -7,6 +12,26 @@ const getData = () => {
   }
 
   return JSON.parse(localStorage.getItem("applications"));
+};
+
+const removeItemFromTheList = (id) => {
+  let newAppList = JSON.parse(localStorage.getItem("applications"));
+  const index = newAppList.indexOf(newAppList.find((app) => app.id === id));
+  newAppList.forEach((app) => {
+    if (newAppList.indexOf(app) === index) {
+      app.id = -100;
+    } else if (newAppList.indexOf(app) > index) {
+      app.id--;
+    }
+  })
+  localStorage.setItem(
+    "applications",
+    JSON.stringify(
+      newAppList.filter((app) => app.id !== -100)
+    )
+  );
+  setAppsList(document.querySelector('#appsSearch').value, true);
+  playSound('./sounds/windows_error.mp3');
 };
 
 const setAppsList = (value, option = false) => {
@@ -23,7 +48,7 @@ const setAppsList = (value, option = false) => {
       image =
         app.imageUrl === ''
           ? `images/Help.png`
-          : `images/${app.id}/${app.imageUrl}`;
+          : `${app.imageUrl}`;
       desc =
         app.desc === ''
           ? "this app does not have description"
@@ -34,18 +59,41 @@ const setAppsList = (value, option = false) => {
           : app.companyName;
       name = app.name;
       if ((option && name.toUpperCase().indexOf(filter) > -1) || !option) {
-        return `<img
-                src="${image}"
-                style="width: 15%; float:left; padding-right: 1rem; padding-top: 35px;"
-                class="rounded-circle"
-                alt="${app.name}"
-            />
-            <div class="container" style="display:inline;">
-                <h1 style="font-size: 3rem; margin-bottom: 1px">${app.name}</h1>
-                <p style="font-size: 2rem; margin-bottom: 1px">${desc}</p>
-                <p style="font-size: 1rem; margin-bottom: 1px">Price:${app.price}$</p>
-                <p style="font-size: 1rem;">Company name:${companyName}</p>
-            </div>`;
+        return `
+                <div class="card mb-3 border border-5 border-dark center" style="max-width: 550px; max-height: 300px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="${image}" class="img-fluid rounded-circle" style="width: 180px;" alt="${app.name}">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <button type="button" class="btn btn-danger rounded-circle float-end" style="margin-top: 80px; padding-top: 11px; width: 45px; height: 45px;" data-bs-toggle="modal" data-bs-target="#deleteConfirmation${app.id}">🗑</button>
+                
+                        <div class="modal fade" id="deleteConfirmation${app.id}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteConfirmation${app.id}label" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="deleteConfirmation${app.id}label">Delete ${app.name}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                Are you sure about deleting ${app.name}?
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" onclick="removeItemFromTheList(${app.id})" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <h2 class="card-title">${app.name}</h2>
+                        <p class="card-text">${desc}</p>
+                        <p class="card-text"><small class="text-muted">Price:${app.price}$</small></p>
+                        <p class="card-text"><small class="text-muted">Company name:${companyName}</small></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>`;
       } else {
         return "";
       }
