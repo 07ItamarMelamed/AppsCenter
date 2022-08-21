@@ -7,11 +7,16 @@ const playSound = (videoFile) => {
 
 const getData = () => {
   if (localStorage.getItem("applications") == null) {
-    localStorage.setItem("applications", JSON.stringify(applications));
-    localStorage.setItem("id", id);
+    setDefaultApps();
   }
 
   return JSON.parse(localStorage.getItem("applications"));
+};
+
+const setDefaultApps = () => {
+  localStorage.setItem("applications", JSON.stringify(applications));
+  localStorage.setItem("id", id);
+  setAppsList(document.querySelector("#appsSearch").value, true);
 };
 
 const removeItemFromTheList = (id) => {
@@ -28,8 +33,9 @@ const removeItemFromTheList = (id) => {
     "applications",
     JSON.stringify(newAppList.filter((app) => app.id !== -100))
   );
+  $(`#deleteConfirmation${id}`).modal("hide");
   setAppsList(document.querySelector("#appsSearch").value, true);
-  playSound('../assets/sounds/windows_shutdown.mp3');
+  playSound("../assets/sounds/windows_shutdown.mp3");
 };
 
 const setAppsList = (value, option = false) => {
@@ -43,7 +49,8 @@ const setAppsList = (value, option = false) => {
     .join("");
   document.getElementById("listAllApps").innerHTML = appsData
     .map((app) => {
-      image = app.imageUrl === "" ? `images/Help.png` : `${app.imageUrl}`;
+      image =
+        app.imageUrl === "" ? "../assets/images/Help.png" : `${app.imageUrl}`;
       desc = app.desc === "" ? "this app does not have description" : app.desc;
       companyName =
         app.companyName === ""
@@ -73,7 +80,7 @@ const setAppsList = (value, option = false) => {
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" onclick="removeItemFromTheList(${app.id})" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+                                <button type="button" onclick="removeItemFromTheList(${app.id})" class="btn btn-danger">Delete</button>
                               </div>
                             </div>
                           </div>
