@@ -28,98 +28,17 @@
       alt="AppsCenter Title"
     />
     <div class="container py-5" style="width: 400px;">
-      <form class="col g-3 needs-validation" novalidate>
-        <div class="row-md-4">
-          <label for="nameInput" class="form-label py-2">App Name:</label>
-          <div class="input-group has-validation">
-            <input
-              type="text"
-              class="form-control"
-              id="nameInput"
-              name="name"
-              placeholder="Name"
-              aria-describedby="inputGroupPrepend"
-              maxlength="30"
-              minlength="4"
-              pattern="\w*"
-              required
-            />
-            <div class="invalid-feedback">
-              Must have at least 4 characters from letters and numbers.
-            </div>
-          </div>
-        </div>
-        <div class="row-md-4">
-          <label for="priceInput" class="form-label py-2">App Price:</label>
-          <div class="input-group has-validation">
-            <input
-              type="text"
-              min="0"
-              class="form-control"
-              id="priceInput"
-              name="price"
-              placeholder="Price in $"
-              aria-describedby="inputGroupPrepend"
-              pattern="\d*\.*\d+"
-              required
-            />
-            <div class="invalid-feedback">
-              Insert a number.
-            </div>
-          </div>
-        </div>
-        <div class="row-md-4">
-          <label for="descInput" class="form-label py-2">App Description:</label>
-          <div class="input-group has-validation">
-            <input
-              type="text"
-              class="form-control"
-              id="descInput"
-              name="description"
-              placeholder="Description"
-              aria-describedby="inputGroupPrepend"
-              maxlength="500"
-            />
-          </div>
-        </div>
-        <div class="row-md-4">
-          <label for="companyInput" class="form-label py-2">Company:</label>
-          <div class="input-group has-validation">
-            <input
-              type="text"
-              class="form-control"
-              id="companyInput"
-              name="companyName"
-              placeholder="Company Name"
-              aria-describedby="inputGroupPrepend"
-              maxlength="30"
-            />
-          </div>
-        </div>
-        <div class="row-md-4">
-          <label for="imageInput" class="form-label py-2">Image URL:</label>
-          <div class="input-group has-validation">
-            <input
-              type="text"
-              class="form-control"
-              id="imageInput"
-              name="ImageUrl"
-              placeholder="Image URL"
-              aria-describedby="inputGroupPrepend"
-              maxlength="300"
-            />
-          </div>
-        </div>
+      <form class="newForms col g-3 needs-validation" novalidate>
     </div>
-      <button
-        type="button"
-        class="center btn btn-success btn-lg"
-        style="display: block;"
-        onclick="moveToMainPage()"
-      >
-        Publish Application
-      </button>
-  </form>
+          <button
+            type="button"
+            class="center btn btn-success btn-lg"
+            style="display: block;"
+            onclick="moveToMainPage() "
+          >
+          Publish Application
+          </button>
+        </form>
   <script src="src/applications.js"></script>
   <script src="src/AddApp.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>

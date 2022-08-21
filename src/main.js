@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 const playSound = (videoFile) => {
   const audio = new Audio(videoFile);
   audio.play();
-}
+};
 
 const getData = () => {
   if (localStorage.getItem("applications") == null) {
@@ -23,15 +23,13 @@ const removeItemFromTheList = (id) => {
     } else if (newAppList.indexOf(app) > index) {
       app.id--;
     }
-  })
+  });
   localStorage.setItem(
     "applications",
-    JSON.stringify(
-      newAppList.filter((app) => app.id !== -100)
-    )
+    JSON.stringify(newAppList.filter((app) => app.id !== -100))
   );
-  setAppsList(document.querySelector('#appsSearch').value, true);
-  playSound('./sounds/windows_error.mp3');
+  setAppsList(document.querySelector("#appsSearch").value, true);
+  playSound("./sounds/windows_shutdown.mp3");
 };
 
 const setAppsList = (value, option = false) => {
@@ -45,16 +43,10 @@ const setAppsList = (value, option = false) => {
     .join("");
   document.getElementById("listAllApps").innerHTML = appsData
     .map((app) => {
-      image =
-        app.imageUrl === ''
-          ? `images/Help.png`
-          : `${app.imageUrl}`;
-      desc =
-        app.desc === ''
-          ? "this app does not have description"
-          : app.desc;
+      image = app.imageUrl === "" ? `images/Help.png` : `${app.imageUrl}`;
+      desc = app.desc === "" ? "this app does not have description" : app.desc;
       companyName =
-        app.companyName === ''
+        app.companyName === ""
           ? "this app does not have a company"
           : app.companyName;
       name = app.name;

@@ -39,16 +39,73 @@
       <button type="button" class="btn btn-light">
         <img style="width: 20px" src="images/magnifyingGlass.png" />
       </button>
-      <form action="addApplication.html">
-        <button type="submit" class="btn btn-success">+ Publish new App</button>
-      </form>
+      <button
+        type="button"
+        class="btn btn-success"
+        data-bs-toggle="modal"
+        data-bs-target="#addPageModal"
+      >
+        + Publish new App
+      </button>
+
+      <div
+        class="modal fade"
+        id="addPageModal"
+        tabindex="-1"
+        data-bs-keyboard="false"
+        aria-labelledby="addPageLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addPageLabel">Add New Application</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="container py-5" style="width: 400px;">
+                <form class="newForms col g-3 needs-validation" novalidate>
+              </div>
+                <button
+                  type="button"
+                  class="center btn btn-success btn-lg"
+                  style="display: block;"
+                  data-bs-dismiss="modal"
+                  onclick="moveToMainPage()"
+                >
+                Publish Application
+                </button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="container">
       <div id="listAllApps"></div>
     </div>
     <script src="src/applications.js"></script>
+    <script src="src/AddApp.js"></script>
     <script src="src/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
   </body>
 </html>
