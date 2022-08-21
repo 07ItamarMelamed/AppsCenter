@@ -29,7 +29,7 @@ const removeItemFromTheList = (id) => {
     JSON.stringify(newAppList.filter((app) => app.id !== -100))
   );
   setAppsList(document.querySelector("#appsSearch").value, true);
-  playSound("./sounds/windows_shutdown.mp3");
+  playSound('../assets/sounds/windows_shutdown.mp3');
 };
 
 const setAppsList = (value, option = false) => {

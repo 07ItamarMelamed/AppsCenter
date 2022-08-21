@@ -62,7 +62,7 @@ const moveToMainPage = () => {
       desc: desc.value,
       companyName: company.value
     });
-    playSound('./sounds/windows_startup.mp3');
+    playSound('../assets/sounds/windows_startup.mp3');
     setAppsList(document.querySelector("#appsSearch").value, true);
   }
 };
