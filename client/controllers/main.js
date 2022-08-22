@@ -35,7 +35,7 @@ const removeItemFromTheList = (id) => {
   );
   $(`#deleteConfirmation${id}`).modal("hide");
   setAppsList(document.querySelector("#appsSearch").value, true);
-  playSound("../assets/sounds/windows_shutdown.mp3");
+  playSound("../assets/windows_shutdown.mp3");
 };
 
 const setAppsList = (value, option = false) => {

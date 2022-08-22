@@ -76,7 +76,7 @@ const moveToMainPage = () => {
       companyName: company.value,
     });
     $('#addPageModal').modal('hide');
-    playSound("../assets/sounds/windows_startup.mp3");
+    playSound("../assets/windows_startup.mp3");
     setAppsList(document.querySelector("#appsSearch").value, true);
   }
 };
