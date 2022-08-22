@@ -30,10 +30,10 @@ const queryGet = async (queryText, values = []) => {
     }
 };
 
-const updateApp = async (app) => {
+const updateApp = async (id, app) => {
   await querySet(
-    `UPDATE "AppsCenter".applications SET "id" = $1, "imageUrl" = $2, "name" = $3, "price" = $4, "desc" = $5, "companyName" = $6, "createdAt" = $7 WHERE "id" = $1`,
-    [app.id, app.imageUrl, app.name, app.price, app.desc, app.companyName, app.createdAt]
+    `UPDATE "AppsCenter".applications SET "imageUrl" = $2, "name" = $3, "price" = $4, "desc" = $5, "companyName" = $6, "createdAt" = $7 WHERE "id" = $1`,
+    [id, app.imageUrl, app.name, app.price, app.desc, app.companyName, app.createdAt]
   );
 };
 

@@ -1,20 +1,9 @@
 "use strict";
 
-const addItemToTheList = (data) => {
-  localStorage.setItem(
-    "applications",
-    JSON.stringify(
-      JSON.parse(localStorage.getItem("applications")).concat(data)
-    )
-  );
-};
-
-const getNextId = () => {
-  let id = localStorage.getItem("id");
-  localStorage.setItem("id", ++id);
-
-  return id;
-};
+import { STARTUP_MP3_PATH } from "./definitions";
+import {servAddApp} from '../services/applicationService';
+import {playSound, refreshList} from '../controllers/main';
+import {nanoid} from 'nanoid';
 
 const addForm = (
   id,
@@ -54,7 +43,7 @@ const addForm = (
     );
 };
 
-const moveToMainPage = () => {
+const onSubmit = () => {
   const name = document.getElementById("nameInput");
   const price = document.getElementById("priceInput");
   const desc = document.getElementById("descInput");
@@ -67,17 +56,18 @@ const moveToMainPage = () => {
     company.checkValidity() &&
     image.checkValidity()
   ) {
-    addItemToTheList({
-      id: getNextId(),
+    servAddApp({
+      id: nanoid(),
       imageUrl: image.value,
       name: name.value,
       price: price.value,
       desc: desc.value,
       companyName: company.value,
+      createdAt: `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
     });
     $('#addPageModal').modal('hide');
-    playSound("../assets/windows_startup.mp3");
-    setAppsList(document.querySelector("#appsSearch").value, true);
+    playSound(STARTUP_MP3_PATH);
+    refreshList();
   }
 };
 

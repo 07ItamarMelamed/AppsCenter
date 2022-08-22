@@ -60,7 +60,7 @@
         class="form-control"
         list="appsList"
         id="appsSearch"
-        oninput="setAppsList(event.target.value, true)"
+        oninput="setAppsList(event.target.value)"
         placeholder="App to search"
       />
       <datalist id="appsList"> </datalist>
@@ -110,7 +110,7 @@
                   type="button"
                   class="center btn btn-success btn-lg"
                   style="display: block;"
-                  onclick="moveToMainPage()"
+                  onclick="onSubmit()"
                 >
                 Publish Application
                 </button>

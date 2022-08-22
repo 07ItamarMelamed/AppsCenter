@@ -1,50 +1,36 @@
 "use strict";
 
+//<script type="text/javascript" src="../controllers/main.js"></script>
+
 import {applications} from './applications';
+import { SHUTDOWN_MP3_PATH, HELP_IMAGE_PATH } from './definitions';
+import {servDeleteApp, servLoadApps} from '../services/applicationService';
 
 const playSound = (videoFile) => {
   const audio = new Audio(videoFile);
   audio.play();
 };
 
-const getData = () => {
-  if (localStorage.getItem("applications") == null) {
-    setDefaultApps();
-  }
-
-  return JSON.parse(localStorage.getItem("applications"));
-};
-
 const setDefaultApps = () => {
   localStorage.setItem("applications", JSON.stringify(applications));
-  localStorage.setItem("id", id);
-  setAppsList(document.querySelector("#appsSearch").value, true);
+  refreshList();
 };
 
 const removeItemFromTheList = (id) => {
-  let newAppList = JSON.parse(localStorage.getItem("applications"));
-  const index = newAppList.indexOf(newAppList.find((app) => app.id === id));
-  newAppList.forEach((app) => {
-    if (newAppList.indexOf(app) === index) {
-      app.id = -100;
-    } else if (newAppList.indexOf(app) > index) {
-      app.id--;
-    }
-  });
-  localStorage.setItem(
-    "applications",
-    JSON.stringify(newAppList.filter((app) => app.id !== -100))
-  );
+  servDeleteApp(id);
   $(`#deleteConfirmation${id}`).modal("hide");
-  setAppsList(document.querySelector("#appsSearch").value, true);
-  playSound("../assets/windows_shutdown.mp3");
+  refreshList();
+  playSound(SHUTDOWN_MP3_PATH);
 };
 
-const setAppsList = (value, option = false) => {
-  let input, filter, appsData, name, image, desc, companyName;
-  input = option ? String(value) : "";
-  filter = input.toUpperCase();
-  appsData = getData();
+const refreshList = () => {
+  setAppsList(document.querySelector("#appsSearch").value);
+}
+
+const setAppsList = (filter = "") => {
+  let filterBy, name, image, desc, companyName;
+  filterBy = String(filter).toUpperCase();
+  appsData = servLoadApps();
 
   document.getElementById("appsList").innerHTML = appsData
     .map((app) => (app = `<option value=${app.name}></option>`))
@@ -52,14 +38,14 @@ const setAppsList = (value, option = false) => {
   document.getElementById("listAllApps").innerHTML = appsData
     .map((app) => {
       image =
-        app.imageUrl === "" ? "../assets/images/Help.png" : `${app.imageUrl}`;
+        app.imageUrl === "" ? HELP_IMAGE_PATH : `${app.imageUrl}`;
       desc = app.desc === "" ? "this app does not have description" : app.desc;
       companyName =
         app.companyName === ""
           ? "this app does not have a company"
           : app.companyName;
       name = app.name;
-      if ((option && name.toUpperCase().indexOf(filter) > -1) || !option) {
+      if ((name.toUpperCase().indexOf(filterBy) > -1) || !filterBy === "") {
         return `
                 <div class="card mb-3 border border-5 border-dark center" style="max-width: 550px; max-height: 300px;">
                   <div class="row g-0">
@@ -91,6 +77,7 @@ const setAppsList = (value, option = false) => {
                         <p class="card-text">${desc}</p>
                         <p class="card-text"><small class="text-muted">Price:${app.price}$</small></p>
                         <p class="card-text"><small class="text-muted">Company name:${companyName}</small></p>
+                        <p class="card-text"><small class="text-muted">Created At: ${app.createdAt}</small></p>
                       </div>
                     </div>
                   </div>
@@ -102,6 +89,6 @@ const setAppsList = (value, option = false) => {
     .join("");
 };
 
-document.addEventListener("DOMContentLoaded", (event) => {
-  setAppsList(event);
+document.addEventListener("DOMContentLoaded", () => {
+  setAppsList();
 });

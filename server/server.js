@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require('cors');
-const nanoid = require("nanoid");
+const {nanoid} = require('nanoid');
 const { updateApp, getApps, getAppById, insertApp, deleteAppById } = require("./queries");
 //const { connectClient } = require("./database");
 const PORT = 3000;
@@ -39,7 +39,7 @@ exp.get("/api/applications", async (req, res) => {
 exp.post("/api/application", async (req, res) => {
   const date = new Date();
   const newApp = {
-    id: nanoid.nanoid(),
+    id: nanoid(),
     imageUrl: req.body.imageUrl,
     name: req.body.name,
     price: req.body.price,
@@ -52,8 +52,9 @@ exp.post("/api/application", async (req, res) => {
   res.send(newApp);
 });
 
-exp.put("/api/application", async (req, res) => {
-  updateApp(req.body);
+exp.put("/api/application/:id", async (req, res) => {
+  const appId = req.params.id;
+  updateApp(appId, req.body);
   res.send(req.body);
 });
 
