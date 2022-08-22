@@ -1,7 +1,5 @@
 "use strict";
 
-//<script type="text/javascript" src="../controllers/main.js"></script>
-
 import {applications} from './applications';
 import { SHUTDOWN_MP3_PATH, HELP_IMAGE_PATH } from './definitions';
 import {servDeleteApp, servLoadApps} from '../services/applicationService';
