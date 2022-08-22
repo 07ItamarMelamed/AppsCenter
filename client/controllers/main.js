@@ -1,5 +1,7 @@
 "use strict";
 
+import {applications} from './applications';
+
 const playSound = (videoFile) => {
   const audio = new Audio(videoFile);
   audio.play();
