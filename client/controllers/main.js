@@ -1,9 +1,62 @@
 
-//import {applications} from './applications.js';
-//import { SHUTDOWN_MP3_PATH, HELP_IMAGE_PATH } from './definitions.js';
-//import {servDeleteApp, servLoadApps} from '../services/applicationService.js';
+let currAppList = [];
 
-let currAppList;
+const defaultApps = [
+  {
+    id: "Uakgb_J5m9g-0JDMbcJqL",
+    imageUrl: FACEBOOK_IMAGE_PATH,
+    name: "Facebook",
+    price: 2.99,
+    desc: "To see whats new in your friends life!",
+    companyName: "Facebook",
+    createdAt: "2022-08-22",
+  },
+  {
+    id: "V1StGXR8_Z5jdHi6B-myT",
+    imageUrl: TWITTER_IMAGE_PATH,
+    name: "Twitter",
+    price: 5,
+    desc: "To see whats new in your friends life!",
+    companyName: "TwitterC",
+    createdAt: "2022-08-22",
+  },
+  {
+    id: "OswYhi05XGsxYqyGGjenk",
+    imageUrl: INSTAGRAM_IMAGE_PATH,
+    name: "Instagram",
+    price: 2,
+    desc: "To talk with your friends!",
+    companyName: "Instagram",
+    createdAt: "2022-08-22",
+  },
+  {
+    id: "ZLyrwiz_1IXq6F9qKQKqQ",
+    imageUrl: WAZE_IMAGE_PATH,
+    name: "waze",
+    price: 6.66,
+    desc: "To go to see your friends!",
+    companyName: "Israel",
+    createdAt: "2022-08-22",
+  },
+  {
+    id: "CoQEzUWP1TM3O2KJhZh2H",
+    imageUrl: WHATSAPP_IMAGE_PATH,
+    name: "Whatsapp",
+    price: 7,
+    desc: "To talk to your friends!",
+    companyName: "facebook",
+    createdAt: "2022-08-22",
+  },
+  {
+    id: "NCvsMgtkQYiOvTzp63oSs",
+    imageUrl: GETTAXI_IMAGE_PATH,
+    name: "GetTaxi",
+    price: 5.99,
+    desc: "To take a taxi!",
+    companyName: "KahMonit (C)",
+    createdAt: "2022-08-22",
+  },
+];
 
 const playSound = (videoFile) => {
   const audio = new Audio(videoFile);
@@ -11,59 +64,51 @@ const playSound = (videoFile) => {
 };
 
 const setDefaultApps = async () => {
-  currAppList.forEach(app => {
-    servDeleteApp(app.id).then(() => {
-      console.log(`removed app ${app.name}`);
-    });
-  });
-  applications.forEach((app) => {
-    servAddApp(app).then(() => {
-      console.log(`added app ${app.name}`);
-      if (app.name === "getTaxi") {
-        refreshList();
-        console.log("refreshed list");
-      }
-    });
+  servSetDefaultApps().then(() => {
+    currAppList = defaultApps;
+    refreshList();
   });
 };
 
 const removeItemFromTheList = (id) => {
-  servDeleteApp(id)
-  .then(() => {
+  servDeleteApp(id).then(() => {
+    currAppList = currAppList.filter((app) => app.id !== id);
     $(`#deleteConfirmation${id}`).modal("hide");
-    refreshList();
     playSound(SHUTDOWN_MP3_PATH);
+    refreshList();
   });
 };
 
-const refreshList = () => {
-  servLoadApps()
-  .then((res) => {
-    currAppList = res;
-  })
-  .then(() => {
-    setAppsList(document.querySelector("#appsSearch").value);
-  });
+const refreshList = (clearSearch = false) => {
+  const filter = clearSearch === false ? document.querySelector("#appsSearch").value : "";
+  setAppsList(filter);
 };
+
+const firstTimeList = () => {
+  servLoadApps().then((res) => {
+    currAppList = res;
+    setAppsList();
+  });
+}
 
 const setAppsList = (filter = "") => {
-  let filterBy, name, image, desc, companyName;
+  let filterBy, name, image, desc, companyName, id;
   filterBy = String(filter).toUpperCase();
   document.getElementById("appsList").innerHTML = currAppList
-  .map((app) => (app = `<option value=${app.name}></option>`))
-  .join("");
+    .map((app) => (app = `<option value=${app.name}></option>`))
+    .join("");
   document.getElementById("listAllApps").innerHTML = currAppList
-  .map((app) => {
-    image =
-      app.imageUrl === "" ? HELP_IMAGE_PATH : `${app.imageUrl}`;
-    desc = app.desc === "" ? "this app does not have description" : app.desc;
-    companyName =
-      app.companyName === ""
-        ? "this app does not have a company"
-        : app.companyName;
-    name = app.name;
-    if ((name.toUpperCase().indexOf(filterBy) > -1) || !filterBy) {
-      return `
+    .map((app) => {
+      image = app.imageUrl === "" ? HELP_IMAGE_PATH : `${app.imageUrl}`;
+      desc = app.desc === "" ? "this app does not have description" : app.desc;
+      companyName =
+        app.companyName === ""
+          ? "this app does not have a company"
+          : app.companyName;
+      name = app.name;
+      id = String(app.id);
+      if (name.toUpperCase().indexOf(filterBy) > -1 || !filterBy) {
+        return `
               <div class="card mb-3 border border-5 border-dark center appCard">
                 <div class="row g-0">
                   <div class="col-md-4">
@@ -71,13 +116,13 @@ const setAppsList = (filter = "") => {
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
-                      <button type="button" class="btn btn-danger rounded-circle float-end deleteButton" data-bs-toggle="modal" data-bs-target="#deleteConfirmation${app.id}">🗑</button>
+                      <button type="button" class="btn btn-danger rounded-circle float-end deleteButton" data-bs-toggle="modal" data-bs-target="#deleteConfirmation${id}">🗑</button>
               
-                      <div class="modal fade" id="deleteConfirmation${app.id}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteConfirmation${app.id}label" aria-hidden="true">
+                      <div class="modal fade" id="deleteConfirmation${id}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteConfirmation${id}label" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="deleteConfirmation${app.id}label">Delete ${app.name}</h5>
+                              <h5 class="modal-title" id="deleteConfirmation${id}label">Delete ${app.name}</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -85,7 +130,7 @@ const setAppsList = (filter = "") => {
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                              <button type="button" onclick="removeItemFromTheList(${app.id})" class="btn btn-danger">Delete</button>
+                              <button type="button" onclick="removeItemFromTheList('${id}')" class="btn btn-danger">Delete</button>
                             </div>
                           </div>
                         </div>
@@ -99,19 +144,13 @@ const setAppsList = (filter = "") => {
                   </div>
                 </div>
               </div>`;
-    } else {
-      return "";
-    }
-  })
-  .join("");
+      } else {
+        return "";
+      }
+    })
+    .join("");
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  servLoadApps()
-  .then((res) => {
-    currAppList = res;
-  })
-  .then(() => {
-    setAppsList();
-  });
+  firstTimeList();
 });

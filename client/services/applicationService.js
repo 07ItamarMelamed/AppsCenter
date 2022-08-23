@@ -10,7 +10,10 @@ const servDeleteApp = async (id) => {
         },
       }
     );
-    await response.json();
+    const data = await response.text().then((res) => {
+        return res;
+    });
+    return data;
   } catch (e) {
     console.log(`Error. ${e.message}`);
   }
@@ -29,7 +32,29 @@ const servAddApp = async (app) => {
       }),
       headers: { "Content-Type": "application/json" },
     });
-    await response.json();
+    const data = await response.json().then((res) => {
+        return res;
+    });
+    return data;
+  } catch (e) {
+    console.log(`Error. ${e.message}`);
+  }
+};
+
+const servSetDefaultApps = async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/applications`, {
+      method: "PUT",
+      body: JSON.stringify({}),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    const data = await response.json().then((res) => {
+        return res;
+    });
+    return data;
   } catch (e) {
     console.log(`Error. ${e.message}`);
   }
@@ -57,7 +82,10 @@ const servLoadSpecificApp = async (id) => {
         method: "GET",
       }
     );
-    return await response.json();
+    const data = await response.json().then((res) => {
+        return res;
+    });
+    return data;
   } catch (e) {
     console.log(`Error. ${e.message}`);
   }
@@ -80,7 +108,10 @@ const servUpdateApp = async (id, app) => {
         headers: { "Content-Type": "application/json" },
       }
     );
-    await response.json();
+    const data = await response.json().then((res) => {
+        return res;
+    });
+    return data;
   } catch (e) {
     console.log(`Error. ${e.message}`);
   }

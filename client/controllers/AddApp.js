@@ -1,6 +1,3 @@
-//import { STARTUP_MP3_PATH } from "./definitions.js";
-//import {servAddApp} from '../services/applicationService.js';
-//import {playSound, refreshList} from '../controllers/main.js';
 
 const addForm = (
   id,
@@ -10,9 +7,10 @@ const addForm = (
   isRequired,
   maxlength = 10000,
   minlength = 0,
-  pattern = "*",
+  pattern = "",
   feedback = ""
 ) => {
+  const patternString = pattern === "" ? "" : `pattern=${pattern}`;
   const reqString = isRequired ? "required" : "";
   const feedString =
     feedback === "" ? "" : `<div class="invalid-feedback">${feedback}</div>`;
@@ -31,7 +29,7 @@ const addForm = (
           aria-describedby="inputGroupPrepend"
           maxlength="${maxlength}"
           minlength="${minlength}"
-          pattern=${pattern}
+          ${patternString}
           ${reqString}
         />
         ${feedString}
@@ -46,6 +44,13 @@ const onSubmit = () => {
   const desc = document.getElementById("descInput");
   const company = document.getElementById("companyInput");
   const image = document.getElementById("imageInput");
+  const newApp = {
+    imageUrl: image.value,
+    name: name.value,
+    price: price.value,
+    desc: desc.value,
+    companyName: company.value
+  };
   if (
     name.checkValidity() &&
     price.checkValidity() &&
@@ -53,16 +58,11 @@ const onSubmit = () => {
     company.checkValidity() &&
     image.checkValidity()
   ) {
-    servAddApp({
-      imageUrl: image.value,
-      name: name.value,
-      price: price.value,
-      desc: desc.value,
-      companyName: company.value,
-    }).then(() => {
+    servAddApp(newApp).then((res) => {
+      currAppList.push(res);
       $("#addPageModal").modal("hide");
       playSound(STARTUP_MP3_PATH);
-      refreshList();
+      refreshList(true);
     });
   } else {
     let forms = document.querySelectorAll(".needs-validation");
