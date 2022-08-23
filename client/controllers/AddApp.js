@@ -1,8 +1,6 @@
-
 //import { STARTUP_MP3_PATH } from "./definitions.js";
 //import {servAddApp} from '../services/applicationService.js';
 //import {playSound, refreshList} from '../controllers/main.js';
-//import {nanoid} from 'nanoid';
 
 const addForm = (
   id,
@@ -56,17 +54,22 @@ const onSubmit = () => {
     image.checkValidity()
   ) {
     servAddApp({
-      id: nanoid(),
       imageUrl: image.value,
       name: name.value,
       price: price.value,
       desc: desc.value,
       companyName: company.value,
-      createdAt: `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
+    }).then(() => {
+      $("#addPageModal").modal("hide");
+      playSound(STARTUP_MP3_PATH);
+      refreshList();
     });
-    $('#addPageModal').modal('hide');
-    playSound(STARTUP_MP3_PATH);
-    refreshList();
+  } else {
+    let forms = document.querySelectorAll(".needs-validation");
+
+    Array.prototype.slice.call(forms).forEach((form) => {
+      form.classList.add("was-validated");
+    });
   }
 };
 
@@ -103,12 +106,6 @@ const setFields = () => {
   );
   addForm("companyInput", "Company:", "companyName", "Company Name", false, 30);
   addForm("imageInput", "Image URL:", "ImageUrl", "Image URL", false, 300);
-
-  let forms = document.querySelectorAll(".needs-validation");
-
-  Array.prototype.slice.call(forms).forEach((form) => {
-    form.classList.add("was-validated");
-  });
 };
 
 document.addEventListener("DOMContentLoaded", () => {

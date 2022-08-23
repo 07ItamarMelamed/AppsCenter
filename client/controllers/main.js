@@ -3,28 +3,47 @@
 //import { SHUTDOWN_MP3_PATH, HELP_IMAGE_PATH } from './definitions.js';
 //import {servDeleteApp, servLoadApps} from '../services/applicationService.js';
 
-let currAppList = servLoadApps();
+let currAppList;
 
 const playSound = (videoFile) => {
   const audio = new Audio(videoFile);
   audio.play();
 };
 
-const setDefaultApps = () => {
-  localStorage.setItem("applications", JSON.stringify(applications));
-  refreshList();
+const setDefaultApps = async () => {
+  currAppList.forEach(app => {
+    servDeleteApp(app.id).then(() => {
+      console.log(`removed app ${app.name}`);
+    });
+  });
+  applications.forEach((app) => {
+    servAddApp(app).then(() => {
+      console.log(`added app ${app.name}`);
+      if (app.name === "getTaxi") {
+        refreshList();
+        console.log("refreshed list");
+      }
+    });
+  });
 };
 
 const removeItemFromTheList = (id) => {
-  servDeleteApp(id);
-  $(`#deleteConfirmation${id}`).modal("hide");
-  refreshList();
-  playSound(SHUTDOWN_MP3_PATH);
+  servDeleteApp(id)
+  .then(() => {
+    $(`#deleteConfirmation${id}`).modal("hide");
+    refreshList();
+    playSound(SHUTDOWN_MP3_PATH);
+  });
 };
 
 const refreshList = () => {
-  currAppList = servLoadApps();
-  setAppsList(document.querySelector("#appsSearch").value);
+  servLoadApps()
+  .then((res) => {
+    currAppList = res;
+  })
+  .then(() => {
+    setAppsList(document.querySelector("#appsSearch").value);
+  });
 };
 
 const setAppsList = (filter = "") => {
@@ -88,5 +107,11 @@ const setAppsList = (filter = "") => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  setAppsList();
+  servLoadApps()
+  .then((res) => {
+    currAppList = res;
+  })
+  .then(() => {
+    setAppsList();
+  });
 });

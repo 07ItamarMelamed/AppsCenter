@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require('cors');
-//const {nanoid} = require('nanoid');
+const {nanoid} = require('nanoid');
 const { updateApp, getApps, getAppById, insertApp, deleteAppById } = require("./queries");
 //const { connectClient } = require("./database");
 const PORT = 3000;
