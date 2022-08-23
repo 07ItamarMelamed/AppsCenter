@@ -1,8 +1,8 @@
 "use strict";
 
-import {applications} from './applications';
-import { SHUTDOWN_MP3_PATH, HELP_IMAGE_PATH } from './definitions';
-import {servDeleteApp, servLoadApps} from '../services/applicationService';
+import {applications} from './applications.js';
+import { SHUTDOWN_MP3_PATH, HELP_IMAGE_PATH } from './definitions.js';
+import {servDeleteApp, servLoadApps} from '../services/applicationService.js';
 
 const playSound = (videoFile) => {
   const audio = new Audio(videoFile);
@@ -28,12 +28,13 @@ const refreshList = () => {
 const setAppsList = (filter = "") => {
   let filterBy, name, image, desc, companyName;
   filterBy = String(filter).toUpperCase();
-  appsData = servLoadApps();
+  servLoadApps()
 
-  document.getElementById("appsList").innerHTML = appsData
+  .then((appsData) => {
+    document.getElementById("appsList").innerHTML = appsData
     .map((app) => (app = `<option value=${app.name}></option>`))
     .join("");
-  document.getElementById("listAllApps").innerHTML = appsData
+    document.getElementById("listAllApps").innerHTML = appsData
     .map((app) => {
       image =
         app.imageUrl === "" ? HELP_IMAGE_PATH : `${app.imageUrl}`;
@@ -85,6 +86,7 @@ const setAppsList = (filter = "") => {
       }
     })
     .join("");
+  });
 };
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -7,7 +7,7 @@ const querySet = async (queryText, values = []) => {
     } catch (err) {
         throw new Error(err.message);
     } finally {
-        closeClient();
+        //closeClient();
     }
 };
 
@@ -17,7 +17,7 @@ const queryGet = async (queryText, values = []) => {
         return await pool
             .query(queryText, values)
             .then((res) => {
-                console.log(res.rows);
+                //console.log(res.rows);
                 return res.rows;
             })
             .catch((err) => {
@@ -26,7 +26,7 @@ const queryGet = async (queryText, values = []) => {
     } catch (err) {
         throw new Error(err.message);
     } finally {
-        closeClient();
+        //closeClient();
     }
 };
 

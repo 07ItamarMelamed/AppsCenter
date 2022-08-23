@@ -46,7 +46,11 @@ export const servLoadApps = async () => {
 				method: 'GET'
 			}
 		);
-		return await response.json();
+		const data = await response.json()
+        .then((res) => {
+            return res;
+        });
+        return data;
 	} catch (e) {
 		console.log(`Error. ${e.message}`);
 	}
