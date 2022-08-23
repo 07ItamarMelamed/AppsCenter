@@ -1,6 +1,6 @@
-import {FACEBOOK_IMAGE_PATH, TWITTER_IMAGE_PATH, INSTAGRAM_IMAGE_PATH, WAZE_IMAGE_PATH, WHATSAPP_IMAGE_PATH, GETTAXI_IMAGE_PATH} from './definitions.js';
+//import {FACEBOOK_IMAGE_PATH, TWITTER_IMAGE_PATH, INSTAGRAM_IMAGE_PATH, WAZE_IMAGE_PATH, WHATSAPP_IMAGE_PATH, GETTAXI_IMAGE_PATH} from './definitions.js';
 
-export let applications = [
+let applications = [
   {
     id: "Uakgb_J5m9g-0JDMbcJqL",
     imageUrl: FACEBOOK_IMAGE_PATH,

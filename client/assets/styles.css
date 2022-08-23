@@ -1,9 +1,38 @@
+.pageContainment {
+  max-width: 800px;
+}
+
 .center {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-.pageContainment {
-  width: 800px;
+#glassButton {
+  max-width: 20px;
+}
+
+.formsWidth {
+  max-width: 400px;
+}
+
+.appCard {
+  max-width: 550px;
+  max-height: 190px;
+}
+
+.appCardImage {
+  width: 180px;
+}
+
+.deleteButton {
+  margin-top: 80px;
+  padding-top: 11px;
+  width: 45px;
+  height: 45px;
+}
+
+.smallCardText {
+  display: block;
+  color: gray;
 }

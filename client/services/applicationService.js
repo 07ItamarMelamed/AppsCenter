@@ -1,5 +1,5 @@
 
-export const servDeleteApp = async (id) => {
+const servDeleteApp = async (id) => {
 	try {
 		const response = await fetch(
 			`http://localhost:3000/api/application/${id}`, 
@@ -14,7 +14,7 @@ export const servDeleteApp = async (id) => {
 	}
 }
 
-export const servAddApp = async (app) => {
+const servAddApp = async (app) => {
     try {
 		const response = await fetch(
 			`http://localhost:3000/api/application`, 
@@ -38,7 +38,7 @@ export const servAddApp = async (app) => {
 	}
 }
 
-export const servLoadApps = async () => {
+const servLoadApps = async () => {
 	try {
 		const response = await fetch(
 			`http://localhost:3000/api/applications`, 
@@ -56,7 +56,7 @@ export const servLoadApps = async () => {
 	}
 }
 
-export const servLoadSpecificApp = async (id) => {
+const servLoadSpecificApp = async (id) => {
 	try {
 		const response = await fetch(
 			`http://localhost:3000/api/application/${id}`, 
@@ -70,7 +70,7 @@ export const servLoadSpecificApp = async (id) => {
 	}
 }
 
-export const servUpdateApp = async (id, app) => {
+const servUpdateApp = async (id, app) => {
     try {
 		const response = await fetch(
 			`http://localhost:3000/api/application/${id}`, 

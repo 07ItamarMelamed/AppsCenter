@@ -1,9 +1,8 @@
-"use strict";
 
-import { STARTUP_MP3_PATH } from "./definitions.js";
-import {servAddApp} from '../services/applicationService.js';
-import {playSound, refreshList} from '../controllers/main.js';
-import {nanoid} from 'nanoid';
+//import { STARTUP_MP3_PATH } from "./definitions.js";
+//import {servAddApp} from '../services/applicationService.js';
+//import {playSound, refreshList} from '../controllers/main.js';
+//import {nanoid} from 'nanoid';
 
 const addForm = (
   id,

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AppsCenter</title>
@@ -20,7 +20,7 @@
       class="center py-4"
       alt="AppsCenter Title"
     />
-    <div class="pageContainment input-group center py-5" style="width: 800px;">
+    <div class="pageContainment input-group center py-5">
       <input
         class="form-control"
         list="appsList"
@@ -30,7 +30,7 @@
       />
       <datalist id="appsList"> </datalist>
       <button type="button" class="btn btn-light">
-        <img style="width: 20px" src="../assets/images/magnifyingGlass.png" />
+        <img id="glassButton" src="../assets/images/magnifyingGlass.png" />
       </button>
       <button
         type="button"
@@ -68,7 +68,7 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="container py-5" style="width: 400px;">
+              <div class="container formsWidth py-5">
                 <form class="newForms col g-3 needs-validation" novalidate>
               </div>
                 <button
@@ -97,7 +97,12 @@
     <div class="container">
       <div id="listAllApps"></div>
     </div>
-    <script src="../controllers/main.js" type="module"></script>
+    <!--<script src="../controllers/main.js" type="module"></script> -->
+    <script src="../controllers/definitions.js"></script>
+    <script src="../services/applicationService.js"></script>
+    <script src="../controllers/main.js"></script>
+    <script src="../controllers/AddApp.js"></script>
+    <script src="../controllers/applications.js"></script>
     <script src="../../bootstrap-5.2.0-dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
