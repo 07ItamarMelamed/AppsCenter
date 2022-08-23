@@ -73,7 +73,6 @@ const setDefaultApps = async () => {
 const removeItemFromTheList = (id) => {
   servDeleteApp(id).then(() => {
     currAppList = currAppList.filter((app) => app.id !== id);
-    $(`#deleteConfirmation${id}`).modal("hide");
     playSound(SHUTDOWN_MP3_PATH);
     refreshList();
   });
@@ -130,7 +129,7 @@ const setAppsList = (filter = "") => {
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                              <button type="button" onclick="removeItemFromTheList('${id}')" class="btn btn-danger">Delete</button>
+                              <button type="button" onclick="removeItemFromTheList('${id}')" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
                             </div>
                           </div>
                         </div>
