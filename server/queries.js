@@ -1,4 +1,4 @@
-const { pool } = require("./database");
+const { pool, connectClient } = require("./database");
 
 const FACEBOOK_IMAGE_PATH = "../assets/images/facebook.png";
 const TWITTER_IMAGE_PATH = "../assets/images/twitter.png";
@@ -66,22 +66,19 @@ const defaultApps = [
 
 const querySet = async (queryText, values = []) => {
   try {
-    //connectClient();
+    connectClient();
     await pool.query(queryText, values);
   } catch (err) {
     throw new Error(err.message);
-  } finally {
-    //closeClient();
   }
 };
 
 const queryGet = async (queryText, values = []) => {
   try {
-    //connectClient();
+    connectClient();
     return await pool
       .query(queryText, values)
       .then((res) => {
-        //console.log(res.rows);
         return res.rows;
       })
       .catch((err) => {
@@ -89,13 +86,11 @@ const queryGet = async (queryText, values = []) => {
       });
   } catch (err) {
     throw new Error(err.message);
-  } finally {
-    //closeClient();
   }
 };
 
-const updateApp = async (id, app) => {
-  await querySet(
+const updateApp = (id, app) => {
+  querySet(
     `UPDATE "AppsCenter".applications SET "imageUrl" = $2, "name" = $3, "price" = $4, "desc" = $5, "companyName" = $6, "createdAt" = $7 WHERE "id" = $1`,
     [
       id,
@@ -113,8 +108,8 @@ const getApps = async () => {
   return await queryGet(`SELECT * FROM "AppsCenter".applications`);
 };
 
-const insertApp = async (app) => {
-  await querySet(
+const insertApp = (app) => {
+  querySet(
     `INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
     [
       app.id,
@@ -129,18 +124,18 @@ const insertApp = async (app) => {
 };
 
 const addDefaultApps = async () => {
-  await querySet(`DELETE FROM "AppsCenter".applications`);
-  await querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+  querySet(`DELETE FROM "AppsCenter".applications`);
+  querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
   [defaultApps[0].id, defaultApps[0].imageUrl, defaultApps[0].name, defaultApps[0].price, defaultApps[0].desc, defaultApps[0].companyName, defaultApps[0].createdAt]);
-  await querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+  querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
   [defaultApps[1].id, defaultApps[1].imageUrl, defaultApps[1].name, defaultApps[1].price, defaultApps[1].desc, defaultApps[1].companyName, defaultApps[1].createdAt]);
-  await querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`, 
+  querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`, 
   [defaultApps[2].id, defaultApps[2].imageUrl, defaultApps[2].name, defaultApps[2].price, defaultApps[2].desc, defaultApps[2].companyName, defaultApps[2].createdAt]);
-  await querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+  querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
   [defaultApps[3].id, defaultApps[3].imageUrl, defaultApps[3].name, defaultApps[3].price, defaultApps[3].desc, defaultApps[3].companyName, defaultApps[3].createdAt]);
-  await querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`, 
+  querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`, 
   [defaultApps[4].id, defaultApps[4].imageUrl, defaultApps[4].name, defaultApps[4].price, defaultApps[4].desc, defaultApps[4].companyName, defaultApps[4].createdAt]);
-  await querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+  querySet(`INSERT INTO "AppsCenter".applications("id", "imageUrl", "name", "price", "desc", "companyName", "createdAt") VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
   [defaultApps[5].id, defaultApps[5].imageUrl, defaultApps[5].name, defaultApps[5].price, defaultApps[5].desc, defaultApps[5].companyName, defaultApps[5].createdAt]);
 };
 
@@ -151,8 +146,8 @@ const getAppById = async (id) => {
   );
 };
 
-const deleteAppById = async (id) => {
-  await querySet(`DELETE FROM "AppsCenter".applications WHERE "id" = $1`, [id]);
+const deleteAppById = (id) => {
+  querySet(`DELETE FROM "AppsCenter".applications WHERE "id" = $1`, [id]);
 };
 
 module.exports = {

@@ -6,14 +6,11 @@ const servDeleteApp = async (id) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+          Accept: "application/json"
+        }
       }
     );
-    const data = await response.text().then((res) => {
-        return res;
-    });
-    return data;
+    await response.json();
   } catch (e) {
     console.log(`Error. ${e.message}`);
   }
@@ -28,9 +25,9 @@ const servAddApp = async (app) => {
         name: app.name,
         price: app.price,
         desc: app.desc,
-        companyName: app.companyName,
+        companyName: app.companyName
       }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" }
     });
     const data = await response.json().then((res) => {
         return res;
@@ -48,13 +45,10 @@ const servSetDefaultApps = async () => {
       body: JSON.stringify({}),
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
-      },
+        Accept: "application/json"
+      }
     });
-    const data = await response.json().then((res) => {
-        return res;
-    });
-    return data;
+    await response.json();
   } catch (e) {
     console.log(`Error. ${e.message}`);
   }
@@ -63,7 +57,7 @@ const servSetDefaultApps = async () => {
 const servLoadApps = async () => {
   try {
     const response = await fetch(`http://localhost:3000/api/applications`, {
-      method: "GET",
+      method: "GET"
     });
     const data = await response.json().then((res) => {
       return res;
@@ -79,7 +73,7 @@ const servLoadSpecificApp = async (id) => {
     const response = await fetch(
       `http://localhost:3000/api/application/${id}`,
       {
-        method: "GET",
+        method: "GET"
       }
     );
     const data = await response.json().then((res) => {
@@ -103,15 +97,12 @@ const servUpdateApp = async (id, app) => {
           price: app.price,
           desc: app.desc,
           companyName: app.companyName,
-          createdAt: app.createdAt,
+          createdAt: app.createdAt
         }),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" }
       }
     );
-    const data = await response.json().then((res) => {
-        return res;
-    });
-    return data;
+    await response.json();
   } catch (e) {
     console.log(`Error. ${e.message}`);
   }

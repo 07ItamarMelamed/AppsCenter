@@ -9,13 +9,20 @@ const {
   deleteAppById,
   addDefaultApps,
 } = require("./queries");
-const { connectClient } = require("./database");
 const PORT = 3000;
 
 const exp = express();
 exp.use(express.json());
 
 exp.use(cors());
+
+exp.use(function(req, res, next) {
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+	res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+	res.setHeader('Access-Control-Allow-Credentials', true);
+	next();
+});
 
 //Endpoints
 
@@ -41,7 +48,7 @@ exp.get("/api/applications", async (req, res) => {
 });
 
 //  Create
-exp.post("/api/application", async (req, res) => {
+exp.post("/api/application", (req, res) => {
   const date = new Date();
   const newApp = {
     id: nanoid(),
@@ -50,34 +57,30 @@ exp.post("/api/application", async (req, res) => {
     price: req.body.price,
     desc: req.body.desc,
     companyName: req.body.companyName,
-    createdAt: `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`,
+    createdAt: `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
   };
 
-  insertApp(newApp).then((result) => {
-    res.send(result);
-  });
+  insertApp(newApp);
+  res.send(newApp);
 });
 
 //  Set Default Apps
-exp.put("/api/applications", async (req, res) => {
-  addDefaultApps().then((result) => {
-    res.send(result);
-  });
+exp.put("/api/applications", (req, res) => {
+  addDefaultApps();
+  res.send(req.body);
 });
 
-exp.put("/api/application/:id", async (req, res) => {
+exp.put("/api/application/:id", (req, res) => {
   const appId = req.params.id;
-  updateApp(appId, req.body).then((result) => {
-    res.send(result);
-  });
+  updateApp(appId, req.body);
+  res.send(req.body);
 });
 
 //Delete
-exp.delete("/api/application/:id", async (req, res) => {
+exp.delete("/api/application/:id", (req, res) => {
   const appId = req.params.id;
-  deleteAppById(appId).then((result) => {
-    res.send(result); 
-  });
+  deleteAppById(appId);
+  res.send(req.body); 
 });
 
 exp.listen(PORT, function (err) {
@@ -85,5 +88,4 @@ exp.listen(PORT, function (err) {
     console.log("Error in server setup");
   }
   console.log("Server listening on Port", PORT);
-  connectClient();
 });

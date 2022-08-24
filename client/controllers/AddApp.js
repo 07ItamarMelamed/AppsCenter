@@ -38,6 +38,14 @@ const addForm = (
     );
 };
 
+const showValidations = () => {
+  let forms = document.querySelectorAll(".needs-validation");
+
+  Array.prototype.slice.call(forms).forEach((form) => {
+    form.classList.add("was-validated");
+  });
+}
+
 const onSubmit = () => {
   const name = document.getElementById("nameInput");
   const price = document.getElementById("priceInput");
@@ -60,18 +68,14 @@ const onSubmit = () => {
   ) {
     servAddApp(newApp).then((res) => {
       currAppList.push(res);
-      $("#addPageModal").modal("hide");
       playSound(STARTUP_MP3_PATH);
       refreshList(true);
+      $(`#addPageModal`).modal("hide");
     });
   } else {
-    let forms = document.querySelectorAll(".needs-validation");
-
-    Array.prototype.slice.call(forms).forEach((form) => {
-      form.classList.add("was-validated");
-    });
+    showValidations();
   }
-};
+}
 
 const setFields = () => {
   addForm(
